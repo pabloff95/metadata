@@ -1,14 +1,18 @@
 import React from 'react';
 import Section from '../Section';
-import LoadFileButton from './LoadFileButton';
+import LoadButton from './LoadButton';
+import LoadFileButton from './ReadMetadataButton';
 
 interface LoadSectionProps {
+  loadFile:() => Promise<string>
+  setMetadata:any;
 }
 
-const LoadSection: React.FC<LoadSectionProps> = () => {
+const LoadSection: React.FC<LoadSectionProps> = ({loadFile, setMetadata}) => {
   return (
     <Section>
-        <LoadFileButton name='Load'></LoadFileButton>
+        <LoadButton></LoadButton>
+        <LoadFileButton loadFile={loadFile} setMetadata={setMetadata}></LoadFileButton>        
     </Section>
   );
 };
