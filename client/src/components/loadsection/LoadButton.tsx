@@ -1,24 +1,71 @@
 import React, { useState } from 'react';
+import { Dispatch } from 'react';
 
-interface LoadButtonProps {  
+interface LoadButtonProps {
+    setMetadata:Dispatch<{}>;
 }
 
-const LoadButton: React.FC<LoadButtonProps> = ({}) => {
+const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
     const [fileSelected, setFileSelected] = useState("No file loaded yet");
 
-    function updateFileSelected(event:React.ChangeEvent<HTMLInputElement>){ 
-        if (!event.target.files){
-            return;
-        }       
-        setFileSelected(event.target.files[0].name)
+    async function getFileMetadata(event:React.ChangeEvent<HTMLInputElement>):Promise<{}> {
+        const responseUploadFile = await uploadFile(event);
+        if (!responseUploadFile) {
+            return []
+        }
+        const metadata:{message:string} = await getUploadedFileMetadata();
+        
+        return metadata.message[0];
     }
+
+    async function uploadFile(event:React.ChangeEvent<HTMLInputElement>):Promise<{}>{
+        if (!event.target.files){
+            return [];
+        }
+
+        const file:File = event.target.files[0];        
+        setFileSelected(file.name);
+        
+        const fileAsFormData:FormData = new FormData();
+        fileAsFormData.append('file', file);
+        
+        const requestOptions:{} = {            
+            method: "POST",
+            body: fileAsFormData
+        }
+        
+        return await fetch("http://localhost:5000/upload", requestOptions)
+            .then(response => response.json())
+            .catch(error => console.error(error));
+    }
+
+    async function getUploadedFileMetadata():Promise<{message:string}>{
+        const requestOptions:{} = {            
+            method: "GET"
+        }
+
+        const metadataResponse:Response = await fetch("http://localhost:5000/get_file_metadata", requestOptions);
+
+        if (!metadataResponse.ok) {
+            const error:string = "Error while retrieving the metadata from the server";
+            console.error(error);
+            return {message: error};
+        }
+
+        return await metadataResponse.json();
+    }
+    
 
     return (
         <div>
             <input           
                 type="file"
                 id='load-file-btn'   
-                onChange={(event) => updateFileSelected(event)}                
+                onChange={async (event) => {
+                        const metadata:{} = await getFileMetadata(event);
+                        setMetadata(metadata);
+                    }
+                }                
                 hidden
             />
             <label 
