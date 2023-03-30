@@ -9,13 +9,16 @@ CORS(app)
 @app.route('/upload', methods = ['GET', 'POST'])
 def upload_file():
     file = request.files['file']
+    file_name = file.filename
+    
     # Save the file to a temporary location    
-    file.save("temporary_file")
-    return {"message": "File successfully loaded"}
+    file.save(file_name)
+    return {"file_name": file_name}
      
 
 @app.route('/get_file_metadata', methods = ['GET'])
 def get_stored_file_metadata():
-    response = jsonify(message=get_file_metadata())    
+    file_name = request.headers.get("file")
+    response = jsonify(message=get_file_metadata(file_name))    
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response    

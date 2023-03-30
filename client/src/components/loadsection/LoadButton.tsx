@@ -10,17 +10,19 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
 
     async function getFileMetadata(event:React.ChangeEvent<HTMLInputElement>):Promise<{}> {
         const responseUploadFile = await uploadFile(event);
-        if (!responseUploadFile) {
+        
+        if (!responseUploadFile.file_name) {
             return []
         }
-        const metadata:{message:string} = await getUploadedFileMetadata();
+
+        const metadata:{message:string} = await getUploadedFileMetadata(responseUploadFile.file_name);
         
         return metadata.message[0];
     }
 
-    async function uploadFile(event:React.ChangeEvent<HTMLInputElement>):Promise<{}>{
+    async function uploadFile(event:React.ChangeEvent<HTMLInputElement>):Promise<{file_name:string | null}>{
         if (!event.target.files){
-            return [];
+            return {file_name: null};
         }
 
         const file:File = event.target.files[0];        
@@ -39,9 +41,12 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
             .catch(error => console.error(error));
     }
 
-    async function getUploadedFileMetadata():Promise<{message:string}>{
+    async function getUploadedFileMetadata(fileName:string):Promise<{message:string}>{
         const requestOptions:{} = {            
-            method: "GET"
+            method: "GET",
+            headers: {
+                file: fileName
+            }
         }
 
         const metadataResponse:Response = await fetch("http://localhost:5000/get_file_metadata", requestOptions);

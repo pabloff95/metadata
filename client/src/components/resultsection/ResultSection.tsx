@@ -33,7 +33,7 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
   }, [metadata]);
 
   return (
-    <Section>
+    <Section width="w-full">
       <div className="bg-gray-200 rounded p-4 w-fit">
         {content}
       </div>
