@@ -9,7 +9,7 @@ import {getMetadata} from "./components/loadsection/functionsLoadbutton";
 function App() {  
   const [metadata, setMetadata] = useState<{[key: string]: string}>({});
   const [key, setKey] = useState("");
-  const [showEditSection, setEditSection] = useState(false)
+  const [showEditSection, setEditSection] = useState(false);
 
   useEffect(() => {
     setKey(JSON.stringify(metadata));
@@ -17,7 +17,7 @@ function App() {
 
   if (showEditSection){
     return (
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center h-screen">
         <header className='py-5 text-center'>
           <h1 className='text-2xl font-bold'>Metadata editor</h1>
         </header>
@@ -26,14 +26,15 @@ function App() {
             loadFile={getMetadata} 
             setMetadata={setMetadata} 
             metadata={metadata} 
-            setEditSection={setEditSection} />          
-          <EditSection></EditSection>        
+            setEditSection={setEditSection}/>          
+          <EditSection metadata={metadata} ></EditSection>        
         </main>
       </div>
     );
+
   } else {
     return (
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center h-screen">
         <header className='py-5 text-center'>
           <h1 className='text-2xl font-bold'>Metadata editor</h1>
         </header>
