@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Dispatch } from 'react';
 
 interface LoadButtonProps {
     setMetadata:Dispatch<{}>;
+    setEdit:Dispatch<boolean>;
+    setFileSelected:any;
+    fileSelected:string;
 }
 
-const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
-    const [fileSelected, setFileSelected] = useState("No file loaded yet");
+const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSelected, fileSelected}) => {    
 
     async function getFileMetadata(event:React.ChangeEvent<HTMLInputElement>):Promise<{}> {
         const responseUploadFile = await uploadFile(event);
@@ -17,6 +19,8 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
 
         const metadata:{message:string} = await getUploadedFileMetadata(responseUploadFile.file_name);
         
+        setEdit(true);
+
         return metadata.message[0];
     }
 
@@ -26,9 +30,9 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
         }
 
         const file:File = event.target.files[0];        
-        setFileSelected(file.name);
+        setFileSelected(file);
         
-        const fileAsFormData:FormData = new FormData();
+        const fileAsFormData:FormData = new FormData();        
         fileAsFormData.append('file', file);
         
         const requestOptions:{} = {            
@@ -36,7 +40,7 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata}) => {
             body: fileAsFormData
         }
         
-        return await fetch("http://localhost:5000/upload", requestOptions)
+        return await fetch("http://localhost:5000/upload_file", requestOptions)
             .then(response => response.json())
             .catch(error => console.error(error));
     }

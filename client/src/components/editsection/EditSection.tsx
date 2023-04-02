@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch } from 'react';
 import Section from '../Section';
 import { ReactNode } from "react";
 import EditInput from './EditInput';
 
 interface EditSectionProps {
   metadata: {[key: string]: string};  
+  setMetadata:Dispatch<{}>;  
 }
 
-const EditSection: React.FC<EditSectionProps> = ({metadata}) => {
+const EditSection: React.FC<EditSectionProps> = ({metadata, setMetadata}) => {
   const [content, updateContent] = useState<ReactNode>([]);
 
   function getMetadataAsEditContent():void {
@@ -21,7 +22,14 @@ const EditSection: React.FC<EditSectionProps> = ({metadata}) => {
       const key = dataKey.split(":").length > 1? dataKey.split(":")[1] : dataKey;
 
       content.push(
-        <EditInput key={key} valueKey={key} defaultValue={metadata[dataKey]}></EditInput>
+        <EditInput 
+          key={dataKey}
+          originalKey={dataKey} 
+          valueKey={key} 
+          defaultValue={metadata[dataKey]}
+          metadata={metadata}
+          setMetadata={setMetadata}
+        ></EditInput>
       )
     }
 
