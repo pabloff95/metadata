@@ -13,25 +13,18 @@ def get_file_metadata(file_name):
     
 
 def get_file_with_updated_metadata(file_name, metadata):  
-    with exiftool.ExifTool() as dataTool:        
-        for data in metadata:      
-            """
-            if data == "File:Directory":
-                data == "./"                
-            
-            if data == "File:FileName":
-                new_name = data
-            """ 
-            dataTool.execute(bytes(f"-{data}={str(metadata[data])}", encoding='utf-8'), bytes(file_name, encoding='utf-8'))
+    new_name = file_name
 
-    """            
-    with exiftool.ExifToolHelper() as dataTool:
-        metadata = dataTool.get_metadata(new_name)   
-        
-        for data, value in metadata[0].items():
-            print(f"{data}: {value}")
-    """
+    with exiftool.ExifTool() as dataTool:          
+        for data in metadata:                  
+            if data == "File:Directory":
+                continue             
+
+            if data == "File:FileName":
+                new_name = metadata[data]
+            
+            dataTool.execute(bytes(f"-{data}={str(metadata[data])}", encoding='utf-8'), bytes(file_name, encoding='utf-8'))
     
-    return file_name
+    return new_name
     
     

@@ -1,5 +1,6 @@
 import React from "react";
 import BaseButton from "./BaseButton";
+import { saveAs } from 'file-saver';
 
 interface ChangeMetadataButtonProps{
     metadata: {[key: string]: string};
@@ -27,7 +28,7 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
             .catch(error => console.error(error));
     }
 
-    async function getUpdatedFile():Promise<{}> {
+    async function getUpdatedFile():Promise<void> {
         const requestOptions:{} = {            
             method: "GET",
             headers: {
@@ -36,10 +37,13 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
             }
         }
         
-        return await fetch("http://localhost:5000/get_updated_file", requestOptions)
-            .then(response => response.json())
-            .catch(error => console.error(error));
+        const response = await fetch("http://localhost:5000/get_updated_file", requestOptions)
+        
+        const updatedFile = await response.blob();
+
+        saveAs(file, file.name);
     }
+
 
     return (
         <BaseButton
