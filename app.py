@@ -22,9 +22,8 @@ def get_updated_file():
     new_metadata = json.loads(request.headers["metadata"])
     file_name = request.headers["file"]
 
-    get_file_with_updated_metadata(file_name, new_metadata)
+    get_file_with_updated_metadata(file_name, new_metadata)    
     
-    os.remove(file_name)
     return {"message": "New file data received"}
 
 

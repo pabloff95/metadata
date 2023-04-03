@@ -10,7 +10,7 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
 
     async function onClickAction(){
         await uploadOriginalFile();
-        getUpdatedFile();
+        await getUpdatedFile();
     }
 
     async function uploadOriginalFile():Promise<{}> {    
