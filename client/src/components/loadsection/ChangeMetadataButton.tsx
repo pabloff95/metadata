@@ -1,6 +1,5 @@
 import React from "react";
 import BaseButton from "./BaseButton";
-import { saveAs } from 'file-saver';
 
 interface ChangeMetadataButtonProps{
     metadata: {[key: string]: string};
@@ -10,11 +9,11 @@ interface ChangeMetadataButtonProps{
 const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, file}) => {
 
     async function onClickAction(){
-        await uploadOriginalFile();
-        await getUpdatedFile();
+        await uploadOriginalFile();           
+        await saveUpdatedFile();
     }
 
-    async function uploadOriginalFile():Promise<{}> {    
+    async function uploadOriginalFile():Promise<{}> {   
         const fileAsFormData:FormData = new FormData();        
         fileAsFormData.append('file', file);
 
@@ -28,20 +27,24 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
             .catch(error => console.error(error));
     }
 
-    async function getUpdatedFile():Promise<void> {
+    async function saveUpdatedFile():Promise<void> {
         const requestOptions:{} = {            
             method: "GET",
             headers: {
                 metadata: JSON.stringify(metadata),
-                file: file.name
+                file: file.name,
+                directory: "C:/Users/pablo/Desktop"
             }
         }
         
-        const response = await fetch("http://localhost:5000/get_updated_file", requestOptions)
+        const response:Response = await fetch("http://localhost:5000/get_updated_file", requestOptions);
         
-        const updatedFile = await response.blob();
+        if(!response.ok){
+            alert(`Error: file could not be saved`);
+            return;
+        }
 
-        saveAs(file, file.name);
+        alert(`File saved in ${(await response.json()).file_location}`);
     }
 
 

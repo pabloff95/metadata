@@ -23,8 +23,10 @@ def get_file_with_updated_metadata(file_name, metadata):
             if data == "File:FileName":
                 new_name = metadata[data]
             
-            dataTool.execute(bytes(f"-{data}={str(metadata[data])}", encoding='utf-8'), bytes(file_name, encoding='utf-8'))
-    
+            dataTool.execute(bytes(f"-{data}={str(metadata[data])}", encoding='utf-8'), bytes(file_name, encoding='utf-8'))        
+
     return new_name
     
-    
+def save_updated_file_in_directory(directory, file_name):
+    with exiftool.ExifTool() as dataTool:   
+        dataTool.execute(bytes(f"-File:Directory={directory}", encoding='utf-8'), bytes(file_name, encoding='utf-8'))

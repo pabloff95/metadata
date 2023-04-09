@@ -1,6 +1,6 @@
-from flask import Flask, jsonify, request, json, send_file
+from flask import Flask, jsonify, request, json
 from flask_cors import CORS
-from dependencies.manage_metadata import get_file_metadata, get_file_with_updated_metadata
+from dependencies.manage_metadata import get_file_metadata, get_file_with_updated_metadata, save_updated_file_in_directory
 
 app = Flask(__name__)
 CORS(app)
@@ -19,10 +19,13 @@ def upload_file():
 def get_updated_file():    
     new_metadata = json.loads(request.headers["metadata"])
     file_name = request.headers["file"]
+    directory = request.headers["directory"]
 
     file = get_file_with_updated_metadata(f"./{file_name}", new_metadata) 
+
+    save_updated_file_in_directory(directory, file)
     
-    return send_file(file, as_attachment=True)
+    return {"file_location": directory}
 
 
 @app.route('/get_file_metadata', methods = ['GET'])
