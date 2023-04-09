@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { Dispatch, useState } from 'react';
 
 interface EditInputProps {
+  originalKey:string;
   valueKey: string;
   defaultValue: string;
+  setMetadata:Dispatch<{}>;
+  metadata: {[key: string]: string};  
 }
 
-const EditInput: React.FC<EditInputProps> = ({ valueKey, defaultValue }) => {
+const EditInput: React.FC<EditInputProps> = ({ originalKey, valueKey, defaultValue, metadata, setMetadata }) => {
   const [value, updateValue] = useState<string>(defaultValue);
+
+  function onChangeAction(event:React.ChangeEvent<HTMLInputElement>) {
+    const newValue:string = event.target.value;
+
+    updateValue(newValue);
+
+    let newMetadata:{[key: string]: string} = {... metadata};
+    newMetadata[originalKey] = newValue;
+    
+    setMetadata(newMetadata);
+  }
 
   return (
     <div className="flex items-center">
@@ -15,7 +29,7 @@ const EditInput: React.FC<EditInputProps> = ({ valueKey, defaultValue }) => {
         className="border rounded-md px-3 py-2 flex-1"
         type="text"
         value={value}
-        onChange={(event) => updateValue(event.target.value)}
+        onChange={onChangeAction}        
       />
     </div>
   );

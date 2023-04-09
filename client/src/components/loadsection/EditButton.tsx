@@ -1,22 +1,25 @@
 import React, {Dispatch} from "react";
+import BaseButton from "./BaseButton";
 
-interface EditButtonProps {
-    metadata:{};
-    setEditSection:Dispatch<boolean>;
+interface EditButtonProps {    
+    setShowEditSection:Dispatch<boolean>;
+    setReadOnly:Dispatch<boolean>;
+    setEdit:Dispatch<boolean>;
 }
 
+const EditButton: React.FC<EditButtonProps> = ({setShowEditSection, setReadOnly, setEdit}) => {
 
-const EditButton: React.FC<EditButtonProps> = ({metadata, setEditSection}) => {
+    function onClickAction():void {
+        setShowEditSection(true);     
+        setReadOnly(true);
+        setEdit(false);
+    }
+
     return (
-        <button 
-            type="button" 
-            className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-            onClick={() => {              
-                setEditSection(true);                
-            }}
-        >
-            Edit
-        </button>
+        <BaseButton 
+            value="Edit"
+            onClickAction={onClickAction}
+        ></BaseButton>
     );
 }
 

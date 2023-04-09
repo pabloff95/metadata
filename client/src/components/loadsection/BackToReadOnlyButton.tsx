@@ -1,20 +1,24 @@
 import React, {Dispatch} from "react";
+import BaseButton from "./BaseButton";
 
-interface BackToReadOnlyButtonProps {
-    setBackToReadOnly:Dispatch<boolean>;
+interface BackToReadOnlyButtonProps {    
+    setShowEditSection:Dispatch<boolean>;
+    setReadOnly:Dispatch<boolean>;
+    setEdit:Dispatch<boolean>;
 }
 
-const BackToReadOnlyButton: React.FC<BackToReadOnlyButtonProps> = ({setBackToReadOnly}) => {
+const BackToReadOnlyButton: React.FC<BackToReadOnlyButtonProps> = ({setShowEditSection, setReadOnly, setEdit}) => {
+    function onClickAction():void {
+        setShowEditSection(false);
+        setReadOnly(false);
+        setEdit(true);   
+    }
+
     return(
-        <button 
-            type="button"
-            className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2"
-            onClick={() => {
-                setBackToReadOnly(true);
-            }}
-        >
-            Back
-        </button>
+        <BaseButton 
+            value="Back"
+            onClickAction={onClickAction}
+        ></BaseButton>
     )
 }
 
