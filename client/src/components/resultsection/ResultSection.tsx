@@ -18,15 +18,22 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
     }
 
     let content: React.ReactNode[] = [];
+    let index=0;
     for (const dataKey in metadata) {
       const key = dataKey.split(":").length > 1? dataKey.split(":")[1]: dataKey;
+      const rowBgStyle = index++ % 2 === 0? "bg-sky-200" : "bg-sky-100";
       
       content.push(
-        <ResultInput key={dataKey} dataKey={key} dataValue={metadata[dataKey]}></ResultInput>
-      )
+        <ResultInput 
+          key={dataKey} 
+          dataKey={key} 
+          dataValue={metadata[dataKey]}
+          bgStyle={rowBgStyle}
+        ></ResultInput>
+      )      
     }
 
-    updateContent(<ul className='list-disc flex flex-col flex-wrap gap-1 h-full '>{content}</ul>);
+    updateContent(<div className='flex flex-col h-full'>{content}</div>);
   }
 
   useEffect(() => {
@@ -34,8 +41,8 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
   }, [metadata]);
 
   return (
-    <Section width="w-full">
-      <div className="bg-gray-200 rounded p-4 w-full max-h-full">
+    <Section extendClass="w-full">
+      <div className="rounded p-4 w-full max-h-full">
         {content}
       </div>
     </Section>

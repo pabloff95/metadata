@@ -49,14 +49,17 @@ const LoadSection: React.FC<LoadSectionProps> = ({setMetadata, setShowEditSectio
 
   // Render component
   return (
-    <Section width='w-4/12'>      
+    <Section extendClass='w-full flex flex-row justify-between border-transparent'>  
+      <div>
         <LoadButton 
           setMetadata={setMetadata} 
           setEdit={setEdit}
           setFileSelected={setFileSelected}
           fileSelected={fileSelected.name}
         ></LoadButton>   
-
+      </div>    
+      
+      <div className='flex flex-row gap-2'>
         {isEditAllowed && 
           <EditButton 
             setShowEditSection={setShowEditSection} 
@@ -80,11 +83,13 @@ const LoadSection: React.FC<LoadSectionProps> = ({setMetadata, setShowEditSectio
           ></ChangeMetadataButton>
         }
 
-        <br />
-        <ClearButton
-          setClear={setClear}
-        ></ClearButton>
-    </Section>
+        {(isEditAllowed || isReadOnlyActive) && 
+          <ClearButton
+            setClear={setClear}
+          ></ClearButton>
+        }
+      </div>
+    </Section>    
   );    
 };
 

@@ -66,7 +66,7 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSel
     
 
     return (
-        <div>
+        <div className='flex flex-row gap-4 items-center'>
             <input           
                 type="file"
                 id='load-file-btn'   
@@ -83,7 +83,7 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSel
             >
                 Load File
             </label>
-            <div className='mt-2'>
+            <div>
                 <p className='text-sm italic text-neutral-400'>{fileSelected}</p>
             </div>
         </div>

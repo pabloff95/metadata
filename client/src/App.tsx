@@ -15,11 +15,11 @@ function App() {
   }, [metadata]);
  
   return (
-    <div className="flex flex-col justify-center h-screen">
+    <div className="flex flex-col justify-center">
       <header className='py-5 text-center'>
         <h1 className='text-2xl font-bold'>Metadata editor</h1>
       </header>
-      <main className='flex flex-row gap-x-5 h-full p-5 w-full'>
+      <main className='flex flex-col gap-x-5 h-full p-5 w-full'>
         <LoadSection 
           metadata={metadata} 
           setMetadata={setMetadata}             
