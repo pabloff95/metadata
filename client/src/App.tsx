@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import LoadSection from './components/loadsection/LoadSection';
-import ResultSection from './components/resultsection/ResultSection';
+import ButtonSection from './components/buttonsection/ButtonSection';
+import ReadDataSection from './components/readdatasection/ReadDataSection';
 import EditSection from './components/editsection/EditSection';
 import './index.css';
 
@@ -20,19 +20,20 @@ function App() {
         <h1 className='text-3xl font-bold text-gray-900 leading-tight mb-4'>Metadata editor</h1>
       </header>
       <main className='flex flex-col gap-x-5 h-full p-5 w-full'>
-        <LoadSection 
+        <ButtonSection 
           metadata={metadata} 
           setMetadata={setMetadata}             
           setShowEditSection={setShowEditSection}/>     
+          
         {isEditSectionDisplayed?
           <EditSection 
             metadata={metadata} 
             setMetadata={setMetadata}
           ></EditSection>
         :
-          <ResultSection 
+          <ReadDataSection 
             metadata={metadata} 
-          ></ResultSection>
+          ></ReadDataSection>
         }             
       </main>
     </div>

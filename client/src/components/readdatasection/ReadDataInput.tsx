@@ -1,12 +1,12 @@
 import React from 'react';
 
-interface ResultInputProps {
+interface ReadDataInputProps {
     dataKey:string;
     dataValue:string;
     bgStyle:string;
 }
 
-const ResultInput:React.FC<ResultInputProps> = ({dataKey, dataValue, bgStyle}) => {   
+const ReadDataInput:React.FC<ReadDataInputProps> = ({dataKey, dataValue, bgStyle}) => {   
   return (
     <div className={`h-fit w-1/2 flex justify-center items-center gap-10 p-2 self-center ${bgStyle}`}>
       <div className='w-1/2 text-left pl-1'>{dataKey}</div>
@@ -15,4 +15,4 @@ const ResultInput:React.FC<ResultInputProps> = ({dataKey, dataValue, bgStyle}) =
   );
 }
 
-export default ResultInput;
+export default ReadDataInput;

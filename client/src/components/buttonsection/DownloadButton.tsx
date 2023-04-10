@@ -1,12 +1,12 @@
 import React from "react";
 import BaseButton from "./BaseButton";
 
-interface ChangeMetadataButtonProps{
+interface DownloadButtonProps{
     metadata: {[key: string]: string};
     file:File;
 }
 
-const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, file}) => {
+const DownloadButton:React.FC<DownloadButtonProps> = ({metadata, file}) => {
 
     async function onClickAction(){
         await uploadOriginalFile();           
@@ -56,4 +56,4 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
     );
 }
 
-export default ChangeMetadataButton;
+export default DownloadButton;

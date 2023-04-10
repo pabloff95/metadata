@@ -4,15 +4,15 @@ import LoadButton from './LoadButton';
 import EditButton from './EditButton';
 import BackToReadOnlyButton from './BackToReadOnlyButton';
 import ClearButton from './ClearButton';
-import ChangeMetadataButton from './ChangeMetadataButton';
+import DownloadButton from './DownloadButton';
 
-interface LoadSectionProps {
+interface ButtonSectionProps {
   metadata: {[key: string]: string};  
   setMetadata:Dispatch<{}>;  
   setShowEditSection:Dispatch<boolean>;  
 }
 
-const LoadSection: React.FC<LoadSectionProps> = ({setMetadata, setShowEditSection, metadata}) => {
+const ButtonSection: React.FC<ButtonSectionProps> = ({setMetadata, setShowEditSection, metadata}) => {
 
   const [fileSelected, setFileSelected] = useState(new File([], "No file loaded yet"));
   const [isReadOnlyActive, setReadOnly] = useState(false);
@@ -77,10 +77,10 @@ const LoadSection: React.FC<LoadSectionProps> = ({setMetadata, setShowEditSectio
         }
                
         {isReadOnlyActive && 
-          <ChangeMetadataButton
+          <DownloadButton
             file={fileSelected}
             metadata={metadata}
-          ></ChangeMetadataButton>
+          ></DownloadButton>
         }
 
         {(isEditAllowed || isReadOnlyActive) && 
@@ -93,5 +93,5 @@ const LoadSection: React.FC<LoadSectionProps> = ({setMetadata, setShowEditSectio
   );    
 };
 
-export default LoadSection;
+export default ButtonSection;
 
