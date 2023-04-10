@@ -2,13 +2,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Section from '../Section';
 import { ReactNode } from "react";
-import ResultInput from './ResultInput';
+import ReadDataInput from './ReadDataInput';
 
-interface ResultSectionProps {
+interface ReadDataSectionProps {
   metadata: {[key: string]: string};  
 }
 
-const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
+const ReadDataSection: React.FC<ReadDataSectionProps> = ({ metadata }) => {
   const [content, updateContent] = useState<ReactNode>([]);
 
   function getMetadataAsContent():void {
@@ -30,12 +30,12 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
       const rowBgStyle = index++ % 2 === 0? "bg-sky-200" : "bg-sky-50";
       
       content.push(
-        <ResultInput 
+        <ReadDataInput 
           key={dataKey} 
           dataKey={key} 
           dataValue={metadata[dataKey]}
           bgStyle={rowBgStyle}
-        ></ResultInput>
+        ></ReadDataInput>
       )      
     }
 
@@ -55,4 +55,4 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
   )
 }
 
-export default ResultSection;
+export default ReadDataSection;
