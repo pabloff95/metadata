@@ -33,7 +33,7 @@ const DownloadButton:React.FC<DownloadButtonProps> = ({metadata, file}) => {
             headers: {
                 metadata: JSON.stringify(metadata),
                 file: file.name,
-                directory: "C:/Users/pablo/Desktop"
+                directory: ""
             }
         }
         
