@@ -18,10 +18,16 @@ const ResultSection: React.FC<ResultSectionProps> = ({ metadata }) => {
     }
 
     let content: React.ReactNode[] = [];
+    content.push(
+      <div className="h-fit w-1/2 flex justify-center items-center gap-10 p-2 self-center font-bold bg-blue-500 text-white" key="result-header">
+        <div className='w-1/2 text-left pl-1'>METADATA</div>
+        <div className='w-1/2 p-1'>VALUE</div>
+      </div>)
+      
     let index=0;
     for (const dataKey in metadata) {
       const key = dataKey.split(":").length > 1? dataKey.split(":")[1]: dataKey;
-      const rowBgStyle = index++ % 2 === 0? "bg-sky-200" : "bg-sky-100";
+      const rowBgStyle = index++ % 2 === 0? "bg-sky-200" : "bg-sky-50";
       
       content.push(
         <ResultInput 

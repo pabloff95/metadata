@@ -25,7 +25,7 @@ const EditInput: React.FC<EditInputProps> = ({ originalKey, valueKey, defaultVal
 
   return (
     <div className={`h-fit w-1/2 flex justify-center items-center gap-10 p-2 self-center ${bgStyle}`}>
-      <label className="w-1/2 font-bold text-left pl-1">{valueKey}</label>
+      <label className="w-1/2 text-left pl-1">{valueKey}</label>
       <input
         className="w-1/2 border rounded-md p-1"
         type="text"
