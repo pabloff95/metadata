@@ -50,7 +50,7 @@ const ChangeMetadataButton:React.FC<ChangeMetadataButtonProps> = ({metadata, fil
 
     return (
         <BaseButton
-            value="Change Metadata"
+            value="Download"
             onClickAction={onClickAction}
         ></BaseButton>
     );

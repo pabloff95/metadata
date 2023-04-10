@@ -9,8 +9,7 @@ interface LoadButtonProps {
 }
 
 const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSelected, fileSelected}) => {    
-
-    async function getFileMetadata(event:React.ChangeEvent<HTMLInputElement>):Promise<{}> {
+    async function getFileMetadata(event:React.ChangeEvent<HTMLInputElement>):Promise<{}> {        
         const responseUploadFile = await uploadFile(event);
         
         if (!responseUploadFile.file_name) {
@@ -52,7 +51,7 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSel
                 file: fileName
             }
         }
-
+        
         const metadataResponse:Response = await fetch("http://localhost:5000/get_file_metadata", requestOptions);
 
         if (!metadataResponse.ok) {
@@ -66,24 +65,25 @@ const LoadButton: React.FC<LoadButtonProps> = ({setMetadata, setEdit, setFileSel
     
 
     return (
-        <div>
+        <div className='flex flex-row gap-4 items-center'>
             <input           
                 type="file"
                 id='load-file-btn'   
-                onChange={async (event) => {
+                onChange={async (event) => {                        
                         const metadata:{} = await getFileMetadata(event);
-                        setMetadata(metadata);
+                        setMetadata(metadata);                        
+                        event.target.value = "";                        
                     }
-                }                
+                }          
                 hidden
             />
             <label 
-                className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2" 
+                className="bg-blue-500 w-fit hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-2 cursor-pointer" 
                 htmlFor="load-file-btn"
             >
                 Load File
             </label>
-            <div className='mt-2'>
+            <div>
                 <p className='text-sm italic text-neutral-400'>{fileSelected}</p>
             </div>
         </div>

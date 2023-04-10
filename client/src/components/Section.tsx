@@ -3,12 +3,12 @@ import '../index.css';
 
 type ContainerProps = {
   children: ReactNode;
-  width: string;
+  extendClass: string;
 };
 
-const Section = ({ children, width }: ContainerProps) => {
+const Section = ({ children, extendClass }: ContainerProps) => {
   return (
-    <div className={`flex flex-col place-self-center p-5 rounded border h-full ${width}`}>
+    <div className={`place-self-center p-5 rounded border h-full ${extendClass}`}>
       {children}
     </div>
   );
